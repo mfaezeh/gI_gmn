@@ -8,33 +8,18 @@ We evaluate our approach by training a Sparse Gaussian Markov Network model for 
 
 ## Contents
 
-* The **data** folder contains the model parameters and architecture specifications to reconstruct the models for each language (this is created after running *download_data.py*).
-* The **evaluate** folder contains the scripts to reproduce the evaluation results from the paper.
-* The **lib** folder contains the code to use the sequence-to-sequence models to correct very long strings of characters, to compute the metrics used in the paper and the source code of the sequence-to-sequence models.
-* The **notebooks** folder contains the Jupyter Notebooks to build the datasets required to train the sequence-to-sequence models, as well as the exploratory data analysis of the data from the [ICDAR 2019 competition](https://sites.google.com/view/icdar2019-postcorrectionocr).
-* The **tests** folder contains scripts to test the installation of the repository.
-* The **train** folder contains the scripts with hyper-parameters to train the models shown in the paper.
-* The **tutorials** folder contains use cases on how to use the library.
+* The **src** folder contains the code to build both group-level and individual-level GMN of the dataset. 
+* The **notebooks** folder contains the Jupyter Notebooks to build the GMN model of the dataset, as well as the exploratory data analysis of the data from the results.
 
 ## Installation
 
     git clone https://github.com/mfaezeh/gI_gmn.git
     cd gl_gmn
-    pip install .
-    
-To download the datasets and models
-
-    python download_data.py
-    
-To reproduce the results from the paper
-
-    pip install -r requirements.txt
-    cd notebooks
+    pip install .    
 
 To install the Python package
 
     pip install gl_gmn
-
 
 ## License
 
