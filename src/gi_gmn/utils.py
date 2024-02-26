@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import nibabel as nib
-#
 
 def get_subject(path1 ,path2, masker, TR, NRecord,ROI):  # two record version
     file_GM = nib.load(path1)             
