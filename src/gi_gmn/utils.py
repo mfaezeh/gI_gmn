@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 import nibabel as nib
+#
 
-def get_subject(path1 ,path2, masker, TR, NRecord):  # two record version
+def get_subject(path1 ,path2, masker, TR, NRecord,ROI):  # two record version
     file_GM = nib.load(path1)             
     file_data1 = nib.load(path1).get_fdata()[:, :, :, :TR]
     file_data2 = nib.load(path2).get_fdata()[:, :, :, :TR]
@@ -34,6 +35,14 @@ def get_subject(path1 ,path2, masker, TR, NRecord):  # two record version
     
     return DMN_signals
 
+def  partial_corr(pre, ROI):
+    norm = np.zeros((ROI, ROI))
+    
+    # Normalize to get Partial correlation -1.0 < < 1.0
+    for i in range(ROI):
+        for j in range(ROI):
+            norm[i,j] = (-1 * pre[i,j]) / np.sqrt(pre[i,i] * pre[j,j])
+    return norm
 
 def flatten_matrix(d_):
      d = pd.DataFrame(d_)
@@ -101,14 +110,44 @@ def get_correlation_indexes(str1, str2, all_data):
     fg = get_seed_id(str1, all)#,get_seed_id('Precuneus_R')
     for i in range(len(fg)):
         # print(get_lables(fg[i]))
-        if get_lables(fg[i], all_data) == str1 + " " + str2 or get_labels(fg[i], all_data) == str2 + " " + str1:
+        if get_labels(fg[i], all_data) == str1 + " " + str2 or get_labels(fg[i], all_data) == str2 + " " + str1:
             # print(fg[i])
             return fg[i]
 
 def split_into_chunks(arr, chunk_size):
-    print("DEBUG")
     return [arr[i:i + chunk_size] for i in range(0, len(arr), chunk_size)]
 
 def degree_sparsity(arr):
     size = (arr.shape[0] - 1) * (arr.shape[0] / 2)
     return np.count_nonzero(arr) / (2 * size)
+
+def roi_conn(copy_norm):
+    roi,conn = [],[]
+    for i in range(np.nonzero(copy_norm)[0].shape[0]):
+        conn1 = str(np.nonzero(copy_norm)[0][i])+ "_" + str(np.nonzero(copy_norm)[1][i])
+        conn2 = str(np.nonzero(copy_norm)[1][i])+ "_" + str(np.nonzero(copy_norm)[0][i])
+        if np.nonzero(copy_norm)[0][i] not in roi:
+            roi.append(np.nonzero(copy_norm)[0][i])
+        if np.nonzero(copy_norm)[1][i] not in roi:
+            roi.append(np.nonzero(copy_norm)[1][i])
+        if (conn1  not in conn )and (conn2 not in conn) and (conn2!=conn1): # removing two way and self connection ( totall - 120)/2
+            conn.append(conn1)
+    return roi,conn
+
+def get_inx(str1,str2,all):
+    fg = get_seed_id(str1,all)#,get_seed_id('Precuneus_R')
+    for i in range(len(fg)):
+        # print(get_lables(fg[i]))
+        if get_labels(fg[i],all) == str1+" "+str2 or get_labels(fg[i],all) == str2+" "+str1:
+            # print(fg[i])
+            return fg[i]
+        
+def get_recall(n,l,cnt):
+    c=0
+    totall = np.count_nonzero(l == cnt)
+    for i in range(n.shape[0]):
+        if l[i] == cnt and n[i] == cnt:
+            c = c + 1
+    # print(c,totall)
+    return c/totall
+        
