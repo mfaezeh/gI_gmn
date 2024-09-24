@@ -20,6 +20,8 @@ We evaluate our approach by training a Sparse Gaussian Markov Network model for 
 To install the Python package
 
     pip install gl_gmn
+## Full paper access
+https://ieeexplore.ieee.org/document/10596860
 
 ## License
 
