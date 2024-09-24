@@ -23,6 +23,12 @@ To install the Python package
 ## Full paper access
 https://ieeexplore.ieee.org/document/10596860
 
+## Cite This
+
+F. Moradi, J. Faber and C. R. Hernandez-Castillo, "Pairwise Functional Connectivity Estimation in Spinocerebellar Ataxia Type 3 Using Sparse Gaussian Markov Network: Integrating Group and Individual Analyses of rs-fMRI," 2024 IEEE International Symposium on Medical Measurements and Applications (MeMeA), Eindhoven, Netherlands, 2024, pp. 1-6, doi: 10.1109/MeMeA60663.2024.10596860. keywords: {Training;Measurement;Graphics;Graphical models;Estimation;Machine learning;Brain modeling;Functional connectivity;Graphical LASSO;rs-fMRI;Gaussian Markov Network},
+
+
+
 ## License
 
 The project is licensed under the MIT License.
